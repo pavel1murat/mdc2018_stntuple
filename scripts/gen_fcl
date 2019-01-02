@@ -1,0 +1,81 @@
+#!/bin/bash 
+#------------------------------------------------------------------------------
+# example:
+# --------
+#    gen_fcl mdc2018_stntuple 721_0001 flatmugamma-mix  read_reco_stn 1 .
+#------------------------------------------------------------------------------
+
+    project=$1                # mdc2018_stntuple
+    version=$2                # 721_0001
+       dsfs=$3                # flateplus:000010
+        job=$4                # read_reco_stn
+      merge=$5                # 10 or 20 or ...
+       doit=$6
+
+       dsid=`echo $dsfs | awk -F: '{print $1}'`
+         fs=`echo $dsfs | awk -F: '{print $2}'`
+	 cat $project/AAA_PROJECT.txt
+    dataset=`cat $project/AAA_PROJECT.txt | awk -v v=$version -v d=$dsid '{ if (($1 == v) && ($2 == d)) print $3; }'`
+
+prefix='echo ' ; if [ ".$doit" != "." ] ; then prefix='' ; fi
+
+if [ ".$doit" == ".-v" ] ; then 
+    echo project=$project
+    echo version=$version
+    echo dsfs=$dsfs
+    echo job=$job
+    echo merge=$merge
+    echo dsid=$dsid
+    echo fs=$fs
+    echo dataset=$dataset
+    exit
+fi
+
+setup mu2etools
+setup mu2efiletools
+setup mu2egrid 
+
+catalog_dir=/grid/fermiapp/mu2e/catalogs/MDC2018
+
+dss=$dataset.files
+if [ ".$fs" != "." ] ; then dss=$dss.$fs ; fi
+
+input_files=$catalog_dir/$dataset/$dss
+
+template_fcl=$project/$version/${job}.${dsid}.fcl
+
+if [ -d 000 ] ; then rm -rf 000 ; fi
+
+$prefix generate_fcl --description=$job --dsconf=$dsid \
+                     --embed $template_fcl \
+                     --merge=$merge \
+                     --inputs=$input_files
+
+mv seeds.murat* 000/.
+
+dss1=$dataset
+fcl_dir=$project/tmp_fcl/$dss1.$job
+
+if [ ".$fs" != "." ] ; then dss1=$dss1.$fs ; fi
+
+merge_stub=`printf "%04i" $merge`;
+
+fcl_dir=$project/tmp_fcl/$dss1.$job.$merge_stub
+
+if [ -d  $fcl_dir ] ; then rm -rf $fcl_dir ; fi
+mv 000 $fcl_dir
+cd $fcl_dir
+
+# assume fileset to be 6-character long
+if [ ".$fs" != "." ] ; then fcl_tarfile=$project.$dsid.$fs.$job.$merge_stub.fcl.tbz
+else                        fcl_tarfile=$project.$dsid.$job.$merge_stub.fcl.tbz
+fi
+
+$prefix tar -cjf ../$fcl_tarfile *.fcl
+
+if [ -f /pnfs/mu2e/resilient/users/murat/$fcl_tarfile ] ; then rm /pnfs/mu2e/resilient/users/murat/$fcl_tarfile ; fi
+
+$prefix cp  ../$fcl_tarfile /pnfs/mu2e/resilient/users/murat/.
+
+
+

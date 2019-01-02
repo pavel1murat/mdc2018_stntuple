@@ -1,0 +1,90 @@
+# -*- mode:tcl -*-
+#------------------------------------------------------------------------------
+# STNTUPLE maker user FCL template - see read_reco.fcl
+# p1 : default reconstruction path
+# p2 : read and ntuple (use with RootInput to ntuple MDC'2018 files)
+# p3 : path to debug the TPR and CPR reconstruction paths separately
+#------------------------------------------------------------------------------
+BEGIN_PROLOG
+  bgHitFiles    : @nil
+  INPUT_MODULE  : RootInput
+  TRIGGER_PATH  : p2
+  PROCESS_NAME  : ReadRecoStnmaker
+END_PROLOG
+
+#include "Stntuple/fcl/templates.fcl"
+
+process_name : @local::PROCESS_NAME
+
+source       : { module_type : @local::INPUT_MODULE   }
+# source       : { module_type : RootInput   }
+
+outputs      : { @table::Stntuple.outputs   }
+
+physics : {
+    producers: { @table::Stntuple.producers }
+    filters  : { @table::Stntuple.filters   }
+    analyzers: { @table::Stntuple.analyzers }
+#------------------------------------------------------------------------------
+# MC generation, G4, reconstruction and stntuple making
+#------------------------------------------------------------------------------
+    p1       : [ @sequence::Stntuple.gen_g4_time_map,
+		 @sequence::Stntuple.digis          ,
+		 @sequence::Stntuple.trk_hit_reco   ,
+		 @sequence::Stntuple.cal_reco       ,
+		 @sequence::Stntuple.reco_De        ,
+		 @sequence::Stntuple.stnmaker_De
+		]
+#------------------------------------------------------------------------------
+# reconstruction and stntuple making - default for ntupling mdc2018 datasets
+#------------------------------------------------------------------------------
+    p2       : [ @sequence::Stntuple.trk_hit_reco   ,
+		 @sequence::Stntuple.cal_reco       ,
+		 @sequence::Stntuple.reco_De        ,
+		 @sequence::Stntuple.stnmaker_De
+		]
+#------------------------------------------------------------------------------
+# old reco path: TrkPatRec and CalPatRec fully separated
+#------------------------------------------------------------------------------
+    p3       : [ @sequence::Stntuple.gen_g4_time_map ,
+		 @sequence::Stntuple.digis           ,
+		 @sequence::Stntuple.trk_hit_reco    ,
+		 @sequence::Stntuple.cal_reco        ,
+		 @sequence::Stntuple.tpr_reco_dem    ,
+		 @sequence::Stntuple.cpr_reco_dem    ,
+		 @sequence::Stntuple.mpr_reco_dem    ,
+		 @sequence::Stntuple.stnmaker_tcm_dem
+		]
+
+    trigger_paths : [ @local::TRIGGER_PATH ]
+    out           : [     ]
+    end_paths     : [ out ]
+}
+#------------------------------------------------------------------------------
+# uncomment the next 2 lines if you want the DST (.art) file to be written out
+#-----------------------------------------------------------------------------
+# physics.out                               : [ detectorOutput ]
+# outputs.detectorOutput.SelectEvents       : [ @local::TRIGGER_PATH ]
+#------------------------------------------------------------------------------
+# output file names 
+#------------------------------------------------------------------------------
+# uncomment to avoid waisting time on the initialization of detailed neutron 
+# cross sections - that shouldn't affect the electron simulation 
+#------------------------------------------------------------------------------
+physics.producers.generate                      : { @table::Stntuple.producers.egun }
+#------------------------------------------------------------------------------
+# everything below is appended by murat/scripts/submit_mu2e_job
+#------------------------------------------------------------------------------
+services.TFileService.fileName            : "nts.murat.read_reco_stn.xxx.000001.root"
+physics.filters.InitStntuple.histFileName : "nts.murat.read_reco_stn.xxx.000001.stn"
+outputs.detectorOutput.fileName           : "sim.murat.read_reco_stn.xxx.000001.art"
+#------------------------------------------------------------------------------
+# configure STNTUPLE maker
+#------------------------------------------------------------------------------
+physics.filters.StntupleMakerDe.makeStrawData            : 0
+physics.filters.StntupleMakerDe.makeCalData              : 0
+physics.filters.StntupleMakerDe.makeSimp                 : 1          # save gen signal only
+physics.filters.StntupleMakerDe.makeStepPointMC          : 0
+physics.filters.StntupleMakerDe.spmcBlockName            : [ "SpmcBlock"               ]
+physics.filters.StntupleMakerDe.spmcCollTag              : [ "compressDigiMCs:tracker" ]
+#------------------------------------------------------------------------------

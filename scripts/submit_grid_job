@@ -1,0 +1,41 @@
+#!/bin/bash 
+
+        project=$1 # mdc2018_stntuple
+        version=$2 # 721_0001
+            dss=$3 # flateplus-mix:000010
+          merge=$4 # 10
+        jobtype=$5 # read_reco_stn
+           doit=$6 # .
+
+prefix='echo ' ; if [ ".$doit" != "." ] ; then prefix='' ; fi
+
+dsid=`echo $dss | awk -F: '{print $1}'`
+  fs=`echo $dss | awk -F: '{print $2}'`
+
+setup mu2etools
+setup mu2efiletools
+setup mu2egrid 
+
+dsconf=${version}_${dsid}
+
+
+pnfsdir=/pnfs/mu2e/resilient/users/murat
+code_tarball=$pnfsdir/$project.code.$version.tbz
+
+merge_stub=`printf "%04i" $merge`
+
+dataset_conf=${project}_${version}_${dsid}_${jobtype}
+work_project=${project}.${version}.${dsid}.${jobtype}
+fcl_tarball=$pnfsdir/$project.$dsid.$jobtype.$merge_stub.fcl.tbz
+
+if [ ".$fs" != "." ] ; then 
+    dataset_conf=${project}_${version}_${dsid}_${fs}_${jobtype}
+    work_project=${project}.${version}.${dsid}.${fs}.${jobtype}
+    fcl_tarball=$pnfsdir/$project.$dsid.$fs.$jobtype.$merge_stub.fcl.tbz
+fi
+
+
+parameters="--code=$code_tarball --fcllist=$fcl_tarball --dsconf=$dataset_conf --wfproject=$work_project"
+parameters=$parameters" --transfer-all-files --expected-lifetime=8h"
+
+$prefix mu2eprodsys $parameters

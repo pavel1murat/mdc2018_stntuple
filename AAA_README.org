@@ -1,0 +1,82 @@
+#
+
+
+* *work log*
+<2019-01-01 Tue>
+
+  mdc2018_stntuple/scripts/gen_fcl mdc2018_stntuple 721_0001 flateplus read_reco_stn 10 .
+
+  murat/scripts/submit_mu2e_job -c mdc2018_stntuple/tmp_fcl/dig.mu2e.flateplus.MDC2018a.art.read_reco_stn.0025/cnf.murat.read_reco_stn.flateplus.001002_00000000.fcl -n 100
+
+  input file size: ~50 MBytes
+
+  *about 0.5 sec/event*, 1 file - about 2300 events, 10 files/job should be OK
+
+  setup mu2egrid v6_00_00
+  gridexport -E $PWD/grid_export -X mdc2018_stntuple/AAA_GRIDEXPORT_EXCLUDE.txt
+
+<2018-12-30 Sun>
+
+dccp -P -t 3600 dcap://fndca1.fnal.gov:24125//pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dig/mu2e/flatpigamma/MDC2018b/art/b9/78/dig.mu2e.flatpigamma.MDC2018b.001002_00000039.art
+dccp -P -t 3600 dcap://fndca1.fnal.gov:24125//pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dig/mu2e/flatpigamma/MDC2018b/art/65/bc/dig.mu2e.flatpigamma.MDC2018b.001002_00000283.art
+dccp -P -t 3600 dcap://fndca1.fnal.gov:24125//pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dig/mu2e/flatpigamma/MDC2018b/art/d0/be/dig.mu2e.flatpigamma.MDC2018b.001002_00000340.art
+
+
+<2018-12-28 Fri>
+  cd /pnfs/mu2e/tape/phy-sim/dig/mu2e/flatmugamma-mix/MDC2018d/art/ca/d4
+  cat ".(use)(4)(dig.mu2e.flatmugamma-mix.MDC2018d.001002_00000115.art)"
+
+  *dc_check* :
+
+  dccp -P -t -1 dcap://fndca1.fnal.gov:24125//pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dig/mu2e/flatmugamma-mix/MDC2018d/art/51/6e/dig.mu2e.flatmugamma-mix.MDC2018d.001002_00000137.art; 
+  x=$?; echo $x
+
+
+<2018-12-27 Thu>
+
+  *submitted prestaging* : samweb prestage-dataset --parallel=5 --defname=dig.mu2e.flatmugamma-mix.MDC2018d.art &
+
+ *xrootd* :
+
+ TFile* f = new TFile("root://fndca1.fnal.gov:1094//pnfs/mu2e/tape/phy-sim/dig/mu2e/flatmugamma-mix/MDC2018d/art/b8/a5/dig.mu2e.flatmugamma-mix.MDC2018d.001002_00001049.art")
+
+ *dcap*: 
+
+ 
+
+ <2018-12-26 Wed>
+
+  mdc2018_stntuple/scripts/gen_fcl mdc2018_stntuple 721_0001 flatmugamma-mix read_reco_stn 10 .
+
+ <2018-12-25 Tue>
+
+ *fixed externalRMC --> ExternalRMC*
+
+mdc2018_stntuple/scripts/gen_fcl mdc2018_stntuple 721_0001 dig.mu2e.flatmugamma-mix.MDC2018d.art:000050 read_reco_stn 5 .
+
+
+ <2018-12-24 Mon>
+
+mdc2018_stntuple/scripts/gen_fcl         mdc2018_stntuple dig.mu2e.flatmugamma.MDC2018a.art read_reco_stn 10 .
+
+mdc2018_stntuple/scripts/submit_grid_job mdc2018_stntuple flatmugamma            721_0001 read_reco_stn .
+mdc2018_stntuple/scripts/submit_grid_job mdc2018_stntuple flatmugamma-mix:000010 721_0001 read_reco_stn .
+
+
+ <2018-12-23 Sun>:
+
+. mdc2018_stntuple/scripts/gen_fcl dig.mu2e.flateplus.MDC2018a.art
+cd mdc2018_stntuple/tmp_fcl/dig.mu2e.flateplus.MDC2018a.art.read_reco_stn/
+tar -cjf ../mdc2018_stntuple.flateplus_read_reco_stn.fcl.tbz *.fcl
+rm /pnfs/mu2e/resilient/users/murat/mdc2018_stntuple.flateplus_read_reco_stn.fcl.tbz
+cp ../mdc2018_stntuple.flateplus_read_reco_stn.fcl.tbz /pnfs/mu2e/resilient/users/murat/.
+
+gridexport -E $PWD/grid_export -A mdc2018_stntuple/AAA_GRIDEXPORT_EXCLUDE.txt
+
+
+ <2018-12-22 Sat>
+
+generate_fcl --description=read_reco_stn --dsconf flateplus --merge=10 --embed mdc2018_stnntuple/fcl/read_reco_stnmaker.fcl  --inputs=/mu2e/app/users/murat/mdc2018/catalogs/MDC2018/dig.mu2e.flateplus.MDC2018a.art/dig.mu2e.flateplus.MDC2018a.art.files
+
+
+generate_fcl --description=read_reco_stn --dsconf flateplus --merge=10 --embed mdc2018_stntuple/fcl/read_reco_stnmaker_grid.fcl  --inputs=/mu2e/app/users/murat/mdc2018/catalogs/MDC2018/dig.mu2e.flateplus.MDC2018a.art/dig.mu2e.flateplus.MDC2018a.art.files
