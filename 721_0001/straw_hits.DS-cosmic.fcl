@@ -6,4 +6,4 @@
 physics.filters.StntupleMakerDe.makeStrawData       : 1
 # for large cosmic dataset, to reduce the data volume, require at least one reconstructed helix
 physics.filters.StntupleMakerDe.minNHelices         : 1
-physics.filters.StntupleMakerDe.cutHelixSeedCollTag : 1
+physics.filters.StntupleMakerDe.cutHelixSeedCollTag : MHFinderDe
