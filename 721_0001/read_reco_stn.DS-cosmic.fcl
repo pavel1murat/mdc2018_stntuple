@@ -2,5 +2,9 @@
 
 #include "mdc2018_stntuple/fcl/read_reco_stn.fcl"
 
-# save all MC particles
+# 1. save all MC particles
 # physics.filters.StntupleMakerDe.genId : cosmicDYB
+
+# 2. for large cosmic dataset, to reduce the data volume, require at least one reconstructed helix
+physics.filters.StntupleMakerDe.minNHelices         : 1
+physics.filters.StntupleMakerDe.cutHelixSeedCollTag : MHFinderDe

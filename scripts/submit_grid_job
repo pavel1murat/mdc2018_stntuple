@@ -14,7 +14,7 @@ dsid=`echo $dss | awk -F: '{print $1}'`
 
 setup mu2etools
 setup mu2efiletools
-setup mu2egrid 
+setup mu2egrid        v6_00_00
 
 dsconf=${version}_${dsid}
 
