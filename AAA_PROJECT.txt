@@ -3,6 +3,11 @@
 #
 # version       DSID                         full_dataset_name
 #-------------------------------------------------------------------------------
+721_0001     CeEndpoint               dig.mu2e.CeEndpoint.MDC2018b.art
+721_0002     CeEndpoint               dig.mu2e.CeEndpoint.MDC2018b.art
+721_0001     CeEndpoint-mix           dig.mu2e.CeEndpoint-mix.MDC2018d.art
+721_0001     CeplusEndpoint           dig.mu2e.CeplusEndpoint.MDC2018a.art
+721_0001     CeplusEndpoint-mix       dig.mu2e.CeplusEndpoint-mix.MDC2018d.art
 721_0001     flateplus                dig.mu2e.flateplus.MDC2018a.art
 721_0001     flateplus-mix            dig.mu2e.flateplus-mix.MDC2018d.art
 721_0001     flatmugamma              dig.mu2e.flatmugamma.MDC2018a.art

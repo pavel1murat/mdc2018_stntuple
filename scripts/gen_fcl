@@ -67,8 +67,8 @@ mv 000 $fcl_dir
 cd $fcl_dir
 
 # assume fileset to be 6-character long
-if [ ".$fs" != "." ] ; then fcl_tarfile=$project.$dsid.$fs.$job.$merge_stub.fcl.tbz
-else                        fcl_tarfile=$project.$dsid.$job.$merge_stub.fcl.tbz
+if [ ".$fs" != "." ] ; then fcl_tarfile=$project.$version.$dsid.$fs.$job.$merge_stub.fcl.tbz
+else                        fcl_tarfile=$project.$version.$dsid.$job.$merge_stub.fcl.tbz
 fi
 
 $prefix tar -cjf ../$fcl_tarfile *.fcl

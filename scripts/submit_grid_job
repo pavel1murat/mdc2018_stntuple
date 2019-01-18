@@ -14,19 +14,18 @@ dsid=`echo $dss | awk -F: '{print $1}'`
 
 setup mu2etools
 setup mu2efiletools
-setup mu2egrid        v6_00_00
+setup mu2egrid       v6_01_00
 
 dsconf=${version}_${dsid}
 
-
 pnfsdir=/pnfs/mu2e/resilient/users/murat
-code_tarball=$pnfsdir/$project.code.$version.tbz
+code_tarball=$pnfsdir/$project.$version.code.tbz
 
 merge_stub=`printf "%04i" $merge`
 
 dataset_conf=${project}_${version}_${dsid}_${jobtype}
 work_project=${project}.${version}.${dsid}.${jobtype}
-fcl_tarball=$pnfsdir/$project.$dsid.$jobtype.$merge_stub.fcl.tbz
+fcl_tarball=$pnfsdir/$project.$version.$dsid.$jobtype.$merge_stub.fcl.tbz
 
 if [ ".$fs" != "." ] ; then 
     dataset_conf=${project}_${version}_${dsid}_${fs}_${jobtype}
@@ -34,8 +33,7 @@ if [ ".$fs" != "." ] ; then
     fcl_tarball=$pnfsdir/$project.$dsid.$fs.$jobtype.$merge_stub.fcl.tbz
 fi
 
-
-parameters="--code=$code_tarball --fcllist=$fcl_tarball --dsconf=$dataset_conf --wfproject=$work_project"
-parameters=$parameters" --transfer-all-files --expected-lifetime=8h"
+parameters="--code=$code_tarball --fcllist=$fcl_tarball --xrootd --dsconf=$dataset_conf --wfproject=$work_project"
+parameters=$parameters" --transfer-all-files --expected-lifetime=10h"
 
 $prefix mu2eprodsys $parameters

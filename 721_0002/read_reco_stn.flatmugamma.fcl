@@ -1,0 +1,5 @@
+# -*- mode:tcl -*-
+
+#include "mdc2018_stntuple/fcl/read_reco_stn.fcl"
+
+physics.filters.StntupleMakerDe.genId : ExternalRMC

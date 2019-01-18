@@ -8,16 +8,16 @@ BEGIN_PROLOG
   INPUT_MODULE @protect_ignore: RootInput
   TRIGGER_PATH @protect_ignore: p2
   PROCESS_NAME @protect_ignore: ReadRecoStnmaker
-  GEN_ID       @protect_ignore: ExternalRMC
+  GEN_ID       @protect_ignore: CeEndpoint
 END_PROLOG
 
 #include "Stntuple/test/stnmaker.fcl"
 
-services.TFileService.fileName            : "nts.murat.read_reco_stnmaker.flatmugamma-calo.000001.root"
-physics.filters.InitStntuple.histFileName : "nts.murat.read_reco_stnmaker.flatmugamma-calo.000001.stn"
-outputs.detectorOutput.fileName           : "sim.murat.read_reco_stnmaker.flatmugamma-calo.000001.art"
+services.TFileService.fileName            : "nts.murat.read_reco_stnmaker.CeEndpoint-mix.000001.root"
+physics.filters.InitStntuple.histFileName : "nts.murat.read_reco_stnmaker.CeEndpoint-mix.000001.stn"
+outputs.detectorOutput.fileName           : "sim.murat.read_reco_stnmaker.CeEndpoint-mix.000001.art"
 #------------------------------------------------------------------------------
 # configure STNTUPLE maker
 #------------------------------------------------------------------------------
-physics.filters.StntupleMakerDe.makeCalData : 1 # for flatmugamma-calo only
+physics.filters.StntupleMakerDe.spmcCollTag              : [ "compressDigiMCs:tracker" ]  # not used
 #------------------------------------------------------------------------------
