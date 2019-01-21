@@ -27,12 +27,13 @@ end
 opts = GetoptLong.new(
   [ "--dataset"       , "-d",     GetoptLong::REQUIRED_ARGUMENT ],
   [ "--file"          , "-f",     GetoptLong::REQUIRED_ARGUMENT ],
-  [ "--version"       , "-v",     GetoptLong::NO_ARGUMENT       ],
+  [ "--version"       , "-v",     GetoptLong::REQUIRED_ARGUMENT ],
   [ "--verbose"       , "-V",     GetoptLong::NO_ARGUMENT       ]
 )
 #----------------------------- defaults
-$input_file=nil
-$verbose=0
+$input_file= nil
+$verbose   = 0
+$version   = nil
 
 opts.each do |opt, arg|
   if    (opt == "--dataset"       ) ; $dataset        = arg
@@ -114,15 +115,16 @@ def run2(dataset,version)
   long_dsname = nil;
 
   project_def_file.each_line { |line|
+    puts "#{line}"
     words = line.strip.split();
-    if (words[0] == version) and (words[1] == dataset) then
-      long_dsname = words[3]
+    if (words[0].strip == version) and (words[1].strip == dataset) then
+      long_dsname = words[2]
       break;
     end
   }
 
   if (long_dsname == nil) then
-    printf("run2: TROUBLE! dataset is not defined\n");
+    printf("run2: TROUBLE! dataset .#{dataset}. version .#{version}. is not defined\n");
     return
   end
 
@@ -156,6 +158,7 @@ end
 
 
 # run1($input_file);
+
 run2($dataset,$version);
 
 exit(0)

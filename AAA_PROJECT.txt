@@ -16,6 +16,7 @@
 721_0001     flatpigamma-mix          dig.mu2e.flatpigamma-mix.MDC2018d.art
 721_0001     DS-cosmic                dig.mu2e.DS-cosmic.MDC2018b.art
 721_0001     DS-cosmic-mix            dig.mu2e.DS-cosmic-mix.MDC2018d.art
+721_0001     daves-flash              sim.mu2e.DS-flash-TrkCal-cat.MDC2018b.art
 #-------------------------------------------------------------------------------
 # 721_0002 dataset - updated stntupling code
 #------------------------------------------------------------------------------
