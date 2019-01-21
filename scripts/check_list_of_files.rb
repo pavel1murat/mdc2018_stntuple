@@ -155,6 +155,7 @@ def run2(dataset,version)
 end
 
 
-run2($input_file);
+# run1($input_file);
+run2($dataset,$version);
 
 exit(0)
