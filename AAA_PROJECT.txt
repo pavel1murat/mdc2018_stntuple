@@ -20,7 +20,9 @@
 # 721_0002 datasets - updated stntupling code
 #----------------------------------------------------------------------------------------------------------
 721_0002     CeEndpoint               dig.mu2e.CeEndpoint.MDC2018b.art                     5
+721_0002     CeMLeadingLog            dig.mu2e.CeMLeadingLog.MDC2018e.art
 721_0002     CeplusEndpoint           dig.mu2e.CeplusEndpoint.MDC2018a.art                 5
+721_0002     CePLeadingLog            dig.mu2e.CePLeadingLog.MDC2018e.art
 721_0002     flatInternalRMC          dig.mu2e.flatInternalRMC.MDC2018e.art               10
 721_0002     flatInternalRPC          dig.mu2e.flatInternalRPC.MDC2018e.art               50
 #----------------------------------------------------------------------------------------------------------
