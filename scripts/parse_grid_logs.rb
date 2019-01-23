@@ -45,7 +45,7 @@ def run(dsid)
 # puts "input_fn=#{input_fn}"
   dir = "/mu2e/data/users/"+ENV["USER"]+"/datasets/"+dsid;
 
-  printf ("t_stagein  tot_cpu  tot_wall  tfull t_istn  t_kffpar  t_kffdar\n");
+  printf ("#    jobid     node_name            cpu_id     bogomips    dsid   tstage  totcpu  totwall    tfull    tistn  tkffpar  tkffdar\n");
   for fn in Dir.glob("#{dir}/log/*.log") do
     # puts "-----------------"+fn
 
@@ -59,6 +59,11 @@ def run(dsid)
     kffpar_time   = nil;
     kffdar_time   = nil;
     init_stn_time = nil;
+
+    job_id        = nil;
+    vendor_id     = nil;
+    bogomips      = nil;
+    node_name     = nil;
 
     f.each_line { |line|
       if (line.index("Starting on host ")) then
@@ -80,38 +85,32 @@ def run(dsid)
         kffpar_time = line.strip.split(" ")[2].to_f;
       elsif line.index("p2:KFFDeMHDar:KalFinalFit") then
         kffdar_time = line.strip.split(" ")[2].to_f;
+      elsif (line.index("poms_data") == 0) then
+#------------------------------------------------------------------------------
+# grid job information
+# ["campaign_id:", "task_definition_id:", "task_id:", "job_id:", "batch_id:15514434.0@jobsub02.fnal.gov", \
+#  "host_site:", "bogomips:4599.37", "node_name:murat-15514434-0-fnpc7008.fnal.gov", "vendor_id:AuthenticAMD"]
+#------------------------------------------------------------------------------
+        ww = line.split('=')[1].gsub('"','').gsub('{','').gsub('}','').split(',');
+        for w in ww do
+          w1 = w.split(':');
+          if    (w1[0] == "batch_id" ) then job_id    = w1[1].split('.')[0];
+          elsif (w1[0] == "bogomips" ) then bogomips  = w1[1];
+          elsif (w1[0] == "node_name") then node_name = w1[1].split('-')[3];
+          elsif (w1[0] == "vendor_id") then vendor_id = w1[1].strip;
+          end
+        end
       end
-    } 
+    }
 
 #    puts stage_in_time, cpu_time, wall_time, full_evt_time, kffpar_time, kffdar_time, init_stn_time;
 
-    printf(" %6i %8.0f %8.0f %8.4f %8.4f %8.4f %8.4f\n",
-           stage_in_time, cpu_time, wall_time, full_evt_time, kffpar_time, kffdar_time, init_stn_time);
+    printf(" %11s %-19s %-12s %8s %9s %6i %8.0f %8.0f %8.4f %8.4f %8.4f %8.4f\n",
+           job_id, node_name, vendor_id, bogomips, dsid,
+           stage_in_time, cpu_time, wall_time, full_evt_time, init_stn_time, kffpar_time, kffdar_time );
 
     f.close
   end
-
-#  input_file   = File.open("#{input_fn}","r");
-#
-#  bnn = File.basename(input_fn.strip);
-#  outf = File.open("#{bnn}."+Time.now.strftime("%Y-%d-%m-%H-%M")+".log","w");
-#
-#  input_file.each_line { |fn|
-#    next if (fn[0] == '#') ;
-#    dir = File.dirname(fn.strip).strip;
-#    bn  = File.basename(fn.strip).strip;
-#
-#    cmd = "cd #{dir} ; cat \".(get)(#{bn})(locality))\" ";
-#
-#    x = `#{cmd}`.strip
-#
-##    puts "dir=#{dir} bn=#{bn} cmd=#{cmd}"
-#    outf.puts "fn=#{fn.strip} locality=#{x}"
-##    puts x
-#  }
-#
-#  outf.close
-#
 end
 
 
