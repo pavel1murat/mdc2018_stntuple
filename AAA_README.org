@@ -2,12 +2,12 @@
 
 
 * *721_001*: initial version of jobs/ntuples
-* *721_002*: 
+* *721_002*  : <TAB> to expand 
 
   - do not store TVDetDataBlock, use TStepPointMCBlock instead
   - store hits of the signal process particles (and their direct daughters only)
 
-* *work log*
+* *work log* : <TAB> to expand 
 <2019-01-01 Tue>
 
   mdc2018_stntuple/scripts/gen_fcl mdc2018_stntuple 721_0001 flateplus read_reco_stn 10 .
