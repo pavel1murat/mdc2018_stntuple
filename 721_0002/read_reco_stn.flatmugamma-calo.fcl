@@ -18,6 +18,7 @@ physics.filters.InitStntuple.histFileName : "nts.murat.read_reco_stnmaker.flatmu
 outputs.detectorOutput.fileName           : "sim.murat.read_reco_stnmaker.flatmugamma-calo.000001.art"
 #------------------------------------------------------------------------------
 # configure STNTUPLE maker
+# 1. for flatmugamma-calo only, save CalData block
 #------------------------------------------------------------------------------
-physics.filters.StntupleMakerDe.makeCalData : 1 # for flatmugamma-calo only
+physics.filters.StntupleMakerDe.makeCalData : 1 
 #------------------------------------------------------------------------------

@@ -19,5 +19,3 @@ outputs.detectorOutput.fileName           : "sim.murat.read_reco_stnmaker.CeEndp
 #------------------------------------------------------------------------------
 # configure STNTUPLE maker (store VD hits in TStepPointMCDataBlock
 #------------------------------------------------------------------------------
-physics.filters.StntupleMakerDe.spmcCollTag              : [ "compressDigiMCs:tracker" ]  # not used
-#------------------------------------------------------------------------------

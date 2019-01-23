@@ -19,5 +19,3 @@ outputs.detectorOutput.fileName           : "sim.murat.read_reco_stnmaker.CeEndp
 #------------------------------------------------------------------------------
 # configure STNTUPLE maker
 #------------------------------------------------------------------------------
-physics.filters.StntupleMakerDe.makeVDHits : 0
-#------------------------------------------------------------------------------

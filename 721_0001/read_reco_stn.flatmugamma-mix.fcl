@@ -19,5 +19,3 @@ outputs.detectorOutput.fileName           : "sim.murat.read_reco_stnmaker.flatmu
 #------------------------------------------------------------------------------
 # configure STNTUPLE maker
 #------------------------------------------------------------------------------
-physics.filters.StntupleMakerDe.makeCalData : 0
-#------------------------------------------------------------------------------
