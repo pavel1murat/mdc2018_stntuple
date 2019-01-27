@@ -3,14 +3,16 @@
         project=$1 # mdc2018_stntuple
         version=$2 # 721_0001
             dss=$3 # flateplus-mix:000010
-          merge=$4 # 10
-        jobtype=$5 # read_reco_stn
-           doit=$6 # .
+        jobtype=$4 # read_reco_stn
+           doit=$5 # .
 
 prefix='echo ' ; if [ ".$doit" != "." ] ; then prefix='' ; fi
 
-dsid=`echo $dss | awk -F: '{print $1}'`
-  fs=`echo $dss | awk -F: '{print $2}'`
+     dsid=`echo $dss | awk -F: '{print $1}'`
+       fs=`echo $dss | awk -F: '{print $2}'`
+
+  dataset=`cat $project/AAA_PROJECT.txt | awk -v v=$version -v d=$dsid '{ if (($1 == v) && ($2 == d)) print $3; }'`
+    merge=`cat $project/AAA_PROJECT.txt | awk -v v=$version -v d=$dsid '{ if (($1 == v) && ($2 == d)) print $4; }'`
 
 setup mu2etools
 setup mu2efiletools
@@ -30,10 +32,11 @@ fcl_tarball=$pnfsdir/$project.$version.$dsid.$jobtype.$merge_stub.fcl.tbz
 if [ ".$fs" != "." ] ; then 
     dataset_conf=${project}_${version}_${dsid}_${fs}_${jobtype}
     work_project=${project}.${version}.${dsid}.${fs}.${jobtype}
-    fcl_tarball=$pnfsdir/$project.$dsid.$fs.$jobtype.$merge_stub.fcl.tbz
+    fcl_tarball=$pnfsdir/$project.$version.$dsid.$fs.$jobtype.$merge_stub.fcl.tbz
 fi
 
-parameters="--code=$code_tarball --fcllist=$fcl_tarball --xrootd --dsconf=$dataset_conf --wfproject=$work_project"
+parameters="--code=$code_tarball --fcllist=$fcl_tarball --dsconf=$dataset_conf --wfproject=$work_project"
 parameters=$parameters" --transfer-all-files --expected-lifetime=10h"
+if [ ".$doit" != ".ifdh" ] ; then parameters=$parameters" --xrootd" ; fi
 
 $prefix mu2eprodsys $parameters

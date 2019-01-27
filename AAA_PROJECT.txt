@@ -20,13 +20,19 @@
 # 721_0002 datasets - updated stntupling code
 #----------------------------------------------------------------------------------------------------------
 721_0002     CeEndpoint               dig.mu2e.CeEndpoint.MDC2018b.art                     5
-721_0002     CeMLeadingLog            dig.mu2e.CeMLeadingLog.MDC2018e.art
+721_0002     CeMLeadingLog            dig.mu2e.CeMLeadingLog.MDC2018e.art                  5
 721_0002     CeplusEndpoint           dig.mu2e.CeplusEndpoint.MDC2018a.art                 5
-721_0002     CePLeadingLog            dig.mu2e.CePLeadingLog.MDC2018e.art
+721_0002     CePLeadingLog            dig.mu2e.CePLeadingLog.MDC2018e.art                  5
 721_0002     flatInternalRMC          dig.mu2e.flatInternalRMC.MDC2018e.art               10
 721_0002     flatInternalRPC          dig.mu2e.flatInternalRPC.MDC2018e.art               50
+721_0002     flateminus               dig.mu2e.flateminus.MDC2018b.art                    10
+721_0002     flateminus-mix           dig.mu2e.flateminus-mix.MDC2018d.art                20
+721_0002     flateplus                dig.mu2e.flateplus.MDC2018a.art                     10
+721_0002     flateplus-mix            dig.mu2e.flateplus-mix.MDC2018d.art                 20
 #----------------------------------------------------------------------------------------------------------
 # SIM datasets
 #----------------------------------------------------------------------------------------------------------
 721_0001     DS-flash-TrkCal-cat      sim.mu2e.DS-flash-TrkCal-cat.MDC2018b.art
+721_0001     DS-flash-TrkCal-cut      sim.mu2e.DS-flash-TrkCal-cut.MDC2018a.art
+721_0001     proton-TrkCal            sim.mu2e.proton-TrkCal.MDC2018a.art
 #----------------------------------------------------------------------------------------------------------

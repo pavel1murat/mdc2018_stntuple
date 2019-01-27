@@ -15,9 +15,7 @@ require 'getoptlong'
 # puts " emoe"
 #-----------------------------------------------------------------------
 def usage
-  puts "usage: make_concat_requests -f format -h host -i input_dir "
-  puts "                            -p name_pattern -o output_dir  "
-  puts "                            -b book -d dataset -t output_tcl"
+  puts "usage: check_dataset -d flateminux-mix -v 721_0002 [-V]"
   exit(-1)
 end
 #------------------------------------------------------------------------------
@@ -27,17 +25,20 @@ end
 opts = GetoptLong.new(
   [ "--dataset"       , "-d",     GetoptLong::REQUIRED_ARGUMENT ],
   [ "--file"          , "-f",     GetoptLong::REQUIRED_ARGUMENT ],
+  [ "--nfiles"        , "-n",     GetoptLong::REQUIRED_ARGUMENT ],
   [ "--version"       , "-v",     GetoptLong::REQUIRED_ARGUMENT ],
   [ "--verbose"       , "-V",     GetoptLong::NO_ARGUMENT       ]
 )
 #----------------------------- defaults
-$input_file= nil
-$verbose   = 0
-$version   = nil
+$input_file = nil
+$verbose    = 0
+$version    = nil
+$max_nfiles = -1;
 
 opts.each do |opt, arg|
   if    (opt == "--dataset"       ) ; $dataset        = arg
   elsif (opt == "--file"          ) ; $input_file     = arg
+  elsif (opt == "--nfiles"        ) ; $max_nfiles     = arg.to_i
   elsif (opt == "--version"       ) ; $version        = arg
   elsif (opt == "--verbose"       ) ; $verbose        = 1
   end
@@ -136,6 +137,8 @@ def run2(dataset,version)
   bnn = File.basename(input_fn.strip);
 #  outf = File.open("#{bnn}."+Time.now.strftime("%Y-%d-%m-%H-%M")+".log","w");
 
+  nfiles = 0;
+
   input_file.each_line { |fn|
     next if (fn[0] == '#') ;
     dir = File.dirname(fn.strip).strip;
@@ -149,6 +152,11 @@ def run2(dataset,version)
     #    outf.puts "filename=#{f.strip} locality=#{x}"
     if ( x == "0") then puts "filename=#{f.strip} locality=#{x}"
     else                puts "filename=#{f.strip} locality=#{x} ******************* NEED TO STAGE"
+    end
+
+    nfiles = nfiles+1;
+    if ($max_nfiles > 0) then
+      if (nfiles >= $max_nfiles) then ; break ; end
     end
   }
 
