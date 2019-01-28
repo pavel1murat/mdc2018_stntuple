@@ -45,7 +45,7 @@ def run(dsid)
 # puts "input_fn=#{input_fn}"
   dir = "/mu2e/data/users/"+ENV["USER"]+"/datasets/"+dsid;
 
-  printf ("#    jobid     node_name            cpu_id     bogomips    dsid   tstage  totcpu  totwall    tfull    tistn  tkffpar  tkffdar\n");
+  printf ("     jobid/I     node_name/S       cpu_id/S  bogomips/F  dsid/S  tstage/I totcpu/I totwall/I tfull/F  tistn/F tkffpar/F tkffdar/F\n");
   for fn in Dir.glob("#{dir}/log/*.log") do
     # puts "-----------------"+fn
 
