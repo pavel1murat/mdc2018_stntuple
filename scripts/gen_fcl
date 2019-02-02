@@ -38,7 +38,7 @@ setup mu2egrid
 catalog_dir=/grid/fermiapp/mu2e/catalogs/MDC2018
 
 fs_stub=""
-if [ ".$fs" != "," ] ; then fs_stub=".$fs" ; fi
+if [ ".$fs" != "." ] ; then fs_stub=".$fs" ; fi
 
  input_files=$catalog_dir/$dataset/$dataset${fs_stub}.files
 template_fcl=$project/$version/${job}.${dsid}.fcl

@@ -1,14 +1,31 @@
 #
 
+* *STNTUPLE catalogs*: file:/web/sites/mu2e.fnal.gov/htdocs/public/hep/computing/Stntuple/cafdfc/
+* *plotting timing data* :  <TAB> to expand   
 
-* *721_001*: initial version of jobs/ntuples
-* *721_002*  : <TAB> to expand 
+  *tree format*: jobid/I:node_name/C:cpu_id/C:bogomips/F:dsid/C:vmpeak/F:vmhwm/F:tstage/I:totcpu/I:totwall/I:tfull/F:tistn/F:tkffpar/F:tkffdar/F
+
+  TTree* t = new TTree("t","t");
+  t->ReadFile("mdc2018_stntuple/timing_data/e11s721z.15801293.txt")
+  t->Draw("tfull")
+
+* *721_001*              : initial version of jobs/ntuples
+* *721_002*              : <TAB> to expand 
 
   - do not store TVDetDataBlock, use TStepPointMCBlock instead
   - store hits of the signal process particles (and their direct daughters only)
 
-* *work log* : <TAB> to expand 
+* *work log*             : <TAB> to expand 
 
+  <2019-02-01 Fri>
+
+  Stntuple/scripts/catalog_stntuples -v -d e21s721z  -o v7_2_1
+  Stntuple/scripts/catalog_stntuples -v -d e41s721z  -o v7_2_1
+
+  <2019-01-31 Thu> *for CeEndpoint-mix and CeplusEndpoint-mix use 50 files/job segment*
+
+  mdc2018_stntuple/scripts/gen_fcl mdc2018_stntuple 721_0002 CeEndpoint-mix read_reco_stn .
+  mdc2018_stntuple/scripts/gen_fcl mdc2018_stntuple 721_0002 CeplusEndpoint-mix read_reco_stn .
 
   <2019-01-27 Sun>  *to split a file with the filelist into several ones:* 
 
