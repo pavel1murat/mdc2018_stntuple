@@ -45,25 +45,32 @@ def run(dsid)
 # puts "input_fn=#{input_fn}"
   dir = "/mu2e/data/users/"+ENV["USER"]+"/datasets/"+dsid;
 
-  printf ("     jobid/I     node_name/S       cpu_id/S  bogomips/F  dsid/S  tstage/I totcpu/I totwall/I tfull/F  tistn/F tkffpar/F tkffdar/F\n");
+#------------------------------------------------------------------------------
+# write ntuple format string
+#------------------------------------------------------------------------------
+  printf ("jobid/I:node_name/C:cpu_id/C:bogomips/F:dsid/C:vmpeak/F:vmhwm/F:tstage/I:totcpu/I:totwall/I:tfull/F:tistn/F:tkffpar/F:tkffdar/F\n");
+
   for fn in Dir.glob("#{dir}/log/*.log") do
-    # puts "-----------------"+fn
+    #    puts "-----------------"+fn
 
     f = File.open(fn);
 
-    start_time    = nil;
-    wall_time     = nil;
-    cpu_time      = nil;
-    stage_in_time = nil;
-    full_evt_time = nil;
-    kffpar_time   = nil;
-    kffdar_time   = nil;
-    init_stn_time = nil;
+    start_time    = ""  ;
+    wall_time     = -1  ;
+    cpu_time      = -1  ;
+    stage_in_time = -1  ;
+    full_evt_time = -1.0;
+    kffpar_time   = -1.0;
+    kffdar_time   = -1.0;
+    init_stn_time = -1.0;
 
-    job_id        = nil;
-    vendor_id     = nil;
-    bogomips      = nil;
-    node_name     = nil;
+    job_id        = -1          ;
+    vendor_id     = "undefined" ;
+    bogomips      = -1          ;
+    node_name     = "undefined" ;
+
+    vmpeak        = -1.0;
+    vmhwm         = -1.0;
 
     f.each_line { |line|
       if (line.index("Starting on host ")) then
@@ -74,9 +81,13 @@ def run(dsid)
         words         = line.strip.split(" ");
         stage_in_time = words[10].to_i;
       elsif line.index("TimeReport CPU =") then
-        words         = line.strip.split(" ");
+        words     = line.strip.split(" ");
         cpu_time  = words[3].to_f;
         wall_time = words[6].to_f;
+      elsif line.index("MemReport  VmPeak =") then
+        words   = line.strip.split(" ");
+        vmpeak  = words[3].to_f;
+        vmhwm   = words[6].to_f;
       elsif line.index("Full event  ") then
         full_evt_time = line.strip.split(" ")[3].to_f;
       elsif line.index("p2:InitStntuple:InitStntuple") then
@@ -103,10 +114,11 @@ def run(dsid)
       end
     }
 
-#    puts stage_in_time, cpu_time, wall_time, full_evt_time, kffpar_time, kffdar_time, init_stn_time;
+#    puts "stage_in_time: #{stage_in_time}", cpu_time, wall_time, full_evt_time, kffpar_time, kffdar_time, init_stn_time;
 
-    printf(" %11s %-19s %-12s %8s %9s %6i %8.0f %8.0f %8.4f %8.4f %8.4f %8.4f\n",
-           job_id, node_name, vendor_id, bogomips, dsid,
+    printf(" %11s %-19s %-12s %8s %9s %9.3f %9.3f %6i %8.0f %8.0f %8.4f %8.4f %8.4f %8.4f\n",
+           job_id, node_name, vendor_id, bogomips, dsid, 
+           vmpeak, vmhwm, 
            stage_in_time, cpu_time, wall_time, full_evt_time, init_stn_time, kffpar_time, kffdar_time );
 
     f.close

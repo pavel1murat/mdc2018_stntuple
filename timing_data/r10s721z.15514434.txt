@@ -1,11 +1,11 @@
-#    jobid     node_name            cpu_id     bogomips    dsid   tstage  totcpu  totwall    tfull    tistn  tkffpar  tkffdar
-    15514434 fnpc7008.fnal.gov   AuthenticAMD  4599.37  r10s721z     19     9299     9371   0.6779   0.0086   0.4219   0.2357
-    15514434 fnpc9024.fnal.gov   GenuineIntel  4799.30  r10s721z     16     7216     7292   0.5254   0.0058   0.3257   0.1828
-    15514434 fnpc6024.fnal.gov   AuthenticAMD  4600.45  r10s721z     20    10668    10746   0.7837   0.0092   0.4830   0.2787
-    15514434 fnpc17137.fnal.gov  GenuineIntel  4606.30  r10s721z     34     9796     9878   0.7050   0.0071   0.4335   0.2510
-    15514434 fnpc17137.fnal.gov  GenuineIntel  4606.30  r10s721z     19     9590     9659   0.6905   0.0067   0.4259   0.2446
-    15514434 fnpc9059.fnal.gov   GenuineIntel  4799.31  r10s721z     19     7564     7612   0.5530   0.0054   0.3471   0.1906
-    15514434 fnpc8009.fnal.gov   GenuineIntel  4606.38  r10s721z     31     8344     8423   0.6089   0.0065   0.3778   0.2128
-    15514434 fnpc17146.fnal.gov  GenuineIntel  4606.23  r10s721z     15     9943     9994   0.7106   0.0060   0.4387   0.2540
-    15514434 fnpc17159.fnal.gov  GenuineIntel  4606.13  r10s721z     36     9903    10046   0.7153   0.0068   0.4353   0.2564
-    15514434 fnpc9070.fnal.gov   GenuineIntel  4799.29  r10s721z     24     7474     7553   0.5412   0.0058   0.3364   0.1888
+jobid/I:node_name/C:cpu_id/C:bogomips/F:dsid/C:vmpeak/F:vmhwm/F:tstage/I:totcpu/I:totwall/I:tfull/F:tistn/F:tkffpar/F:tkffdar/F
+    15514434 fnpc7008.fnal.gov   AuthenticAMD  4599.37  r10s721z  2086.870   944.792     19     9299     9371   0.6779   0.0086   0.4219   0.2357
+    15514434 fnpc9024.fnal.gov   GenuineIntel  4799.30  r10s721z  2089.140   847.364     16     7216     7292   0.5254   0.0058   0.3257   0.1828
+    15514434 fnpc6024.fnal.gov   AuthenticAMD  4600.45  r10s721z  2086.850   843.289     20    10668    10746   0.7837   0.0092   0.4830   0.2787
+    15514434 fnpc17137.fnal.gov  GenuineIntel  4606.30  r10s721z  2090.550   850.072     34     9796     9878   0.7050   0.0071   0.4335   0.2510
+    15514434 fnpc17137.fnal.gov  GenuineIntel  4606.30  r10s721z  2089.470   853.848     19     9590     9659   0.6905   0.0067   0.4259   0.2446
+    15514434 fnpc9059.fnal.gov   GenuineIntel  4799.31  r10s721z  2090.680   841.925     19     7564     7612   0.5530   0.0054   0.3471   0.1906
+    15514434 fnpc8009.fnal.gov   GenuineIntel  4606.38  r10s721z  2090.470   849.179     31     8344     8423   0.6089   0.0065   0.3778   0.2128
+    15514434 fnpc17146.fnal.gov  GenuineIntel  4606.23  r10s721z  2090.180   940.462     15     9943     9994   0.7106   0.0060   0.4387   0.2540
+    15514434 fnpc17159.fnal.gov  GenuineIntel  4606.13  r10s721z  2089.650   858.051     36     9903    10046   0.7153   0.0068   0.4353   0.2564
+    15514434 fnpc9070.fnal.gov   GenuineIntel  4799.29  r10s721z  2089.400   952.754     24     7474     7553   0.5412   0.0058   0.3364   0.1888
