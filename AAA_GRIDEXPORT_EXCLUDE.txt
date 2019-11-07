@@ -45,7 +45,7 @@ lib/libmu2e_Analyses_PtrTest*.so
 lib/libmu2e_Analyses_Read*.so
 lib/libmu2e_Analyses_SimParticleAnalyzer*.so
 lib/libmu2e_Analyses_SimParticleCheck*.so
-# need libmu2e_Analyses_SimParticleDaughterSelector_module.sog
+# need libmu2e_Analyses_SimParticleDaughterSelector_module.so
 lib/libmu2e_Analyses_SimParticleDumper*.so
 lib/libmu2e_Analyses_StepPoint*.so
 lib/libmu2e_Analyses_StoppedParticlesDumper*.so
@@ -68,11 +68,14 @@ lib/libmu2e_BFieldTest*.so
 lib/libmu2e_CaloFilters*.so
 #
 lib/libmu2e_CalPatRec_DeltaFinder2*.so
+#
+lib/libmu2e_CommonMC_SelectRecoMC_module.so
 #                                           NEED: lib/libmu2e_CalPatRec_PrefetchData_module*.so
 lib/libmu2e_CutAndCountAnalysis_*.so
 #
 lib/
 lib/libmu2e_DAQ*.so
+lib/libmu2e_DbExample*.so
 #
 lib/libmu2e_EventDisplay.so
 lib/libmu2e_EventDisplay_*.so
@@ -89,6 +92,11 @@ lib/libmu2e_ExtinctionMonitorFNAL_Analyses_*_module.so
 lib/libmu2e_ExtinctionMonitorFNAL_Reconstruction_*_module.so
 lib/libmu2e_ExtinctionMonitorFNAL_TruthAlgs_*_module.so
 #
+lib/libmu2e_Filters_CalibCosmicFilter_module.so
+lib/libmu2e_Filters_CaloShowerSimFilter_module.so
+lib/libmu2e_Filters_ChooseTrackFilter_module.so
+lib/libmu2e_Filters_CompressDigiMCsCheck_module.so
+lib/
 lib/libmu2e_Filters_DIOFilter_module.so
 lib/libmu2e_Filters_EMFBoxHitsFilter_module.so
 lib/libmu2e_Filters_EMFPixelHitsFilter_module.so
@@ -97,12 +105,30 @@ lib/libmu2e_Filters_ExtMonUCIFilter_module.so
 lib/libmu2e_Filters_FilterStepPointPositionMomentum_module.so
 lib/libmu2e_Filters_FilterStepPointAngleVsTarget_module.so
 lib/libmu2e_Filters_HitsInConversionTimeWindow_module.so
+lib/libmu2e_Filters_FilterStepPointPDG_module.so
+lib/libmu2e_Filters_FilterStepPointPzVsTarget_module.so
 lib/libmu2e_Filters_FilterStepPointReflection_module.so
+lib/libmu2e_Filters_FixCaloShowerStepPtrs_module.so
 lib/libmu2e_Filters_InVirtualDetector_module.so
 lib/libmu2e_Filters_InflightPionsHits_module.so
+lib/libmu2e_Filters_MinimumHits_module.so
+lib/libmu2e_Filters_SelectEvents_module.so
+lib/libmu2e_Filters_SelectStepPointsByTime_module.so
+lib/libmu2e_Filters_SeparateCaloShowerStepsCheck_module.so
+lib/libmu2e_Filters_SeparateCaloShowerSteps_module.so
+lib/libmu2e_Filters_StepPointFilter_module.so
+lib/libmu2e_Filters_StepPointsInDigis_module.so
+lib/libmu2e_Filters_StoppedPionsHits_module.so
+lib/libmu2e_Filters_TrackSummaryTruthUpdater_module.so
+lib/libmu2e_Filters_TrackerStepPointFilter_module.so
+# can  skip more
+lib/libmu2e_Filters_TrkPatRecFilter_module.so
+lib/libmu2e_Filters_VetoIncorrectHits_module.so
+lib/libmu2e_Filters_WeightSamplingFilter_module.so
 #
 lib/libmu2e_HelloWorld_*.so
-# lib/libmu2e_ParticleID_*.so
+lib/libmu2e_ParticleID_ParticleIDRead_module*.so
+lib/libmu2e_Print_*.so
                                          # need this one lib/libmu2e_Print_*.so
 lib/libmu2e_Sandbox_*.so
                                          # lib/libmu2e_TrkHitReco_*.so
@@ -112,11 +138,32 @@ lib/libmu2e_Sources_FromEMFMARSFileWeighted_source.so
 lib/libmu2e_Sources_FromExtMonFNALMARSFile_source.so
 #
 # Stntuple configs want it: lib/libmu2e_Stntuple_MuHitDisplay_module.so
+lib/libmu2e_TrackCaloMatching_TrackCaloIntersectionMVA_module.so
+lib/libmu2e_TrackCaloMatching_TrackCaloMatchingExtend_module.so
+lib/libmu2e_TrackCaloMatching_TrackCaloMatchingMVA_module.so
 #
-lib/libmu2e_TrkDiag_*.so
+lib/libmu2e_Trigger_*_module.so
+#
+lib/libmu2e_TrkDiag_BinnedSpectrumWeight_module.so
+lib/libmu2e_TrkDiag_BkgDiag_module.so
+lib/libmu2e_TrkDiag_ComboHitDiag_module.so
+lib/libmu2e_TrkDiag_HelixDiag_module.so
+lib/libmu2e_TrkDiag_KalSeedToTrkQualTree_module.so
+lib/libmu2e_TrkDiag_RMCWeight_module.so
+lib/libmu2e_TrkDiag_ReadKalFits_module.so
+lib/libmu2e_TrkDiag_StrawHitDiag_module.so
+lib/libmu2e_TrkDiag_TimeClusterDiag_module.so
+lib/libmu2e_TrkDiag_TrackAnalysisFromKalSeed_module.so
+lib/libmu2e_TrkDiag_TrackAnalysisReco_module.so
+lib/libmu2e_TrkDiag_TrackAnalysis_module.so
+lib/libmu2e_TrkDiag_TrkRecoDiag_module.so
+lib/libmu2e_TrkDiag_TrkTriggerDiag_module.so
+lib/libmu2e_TrkDiag_TrackPID_module.so
 #
 # GenEventCountReader needs it : lib/libmu2e_TrkExt.so
-lib/libTrkExt_TrkExt_module.so
+lib/libmu2e_TrkExt_*.so
+lib/libmu2e_TrkFilters_*.so
+
 #
 lib/libmu2e_UtilityModules_*_module.so
 # 

@@ -15,23 +15,115 @@
   - do not store TVDetDataBlock, use TStepPointMCBlock instead
   - store hits of the signal process particles (and their direct daughters only)
 
-* *work log*             : <TAB> to expand 
+* *work log*             : submissions are done from /mu2e/app/users/murat/mdc2018_prof/mdc2018_stntuple/
 
-  <2019-02-01 Fri>
+** <2019-06-25 Tue>  *catalog_stntuples, update_book_catalog*                              
+
+   Stntuple/scripts/update_book_catalog mdc2018
+   Stntuple/scripts/catalog_stntuples -D /mu2e/data/users/murat/datasets/e20s7400 -p e20s7400 -b mdc2018 -d e20s7400
+   Stntuple/scripts/catalog_stntuples -D /mu2e/data/users/murat/datasets/m00s7400 -p m00s7400 -b mdc2018 -d m00s7400
+
+** <2019-06-23 Sun>  *check_grid_output*, move_grid_output*                                
+
+   murat/scripts/move_grid_output mdc2018_stntuple.740_0001.Muon105.gen_reco_stn 20827384 m00s7400 .
+   
+   
+   murat/scripts/check_grid_output mdc2018_stntuple.740_0001.gen_reco_stn 20827384
+   murat/scripts/check_grid_output mdc2018_stntuple.740_0001.Muon105.gen_reco_stn 20827384
+
+** <2019-06-23 Sun>  *gridexport* : last tarball : mdc2018_stntuple.740_0001.code.tbz      
+   gridexport -E $PWD/grid_export -A mdc2018_stntuple/AAA_GRIDEXPORT_EXCLUDE.txt
+** <2019-06-22 Sat>  *debug: locate crash in CeEndpoint generation: AvikPIDNew::produce    
+
+(gdb) p this->moduleDescription_
+$7 = {parameterSetID_ = {valid_ = true, id_ = {_M_elems = "\a\353;|*\261\345\026HU\346?\267j\024\203\337\371", <incomplete sequence \327>}}, 
+     moduleName_ = {static npos = 18446744073709551615, 
+     _M_dataplus = {<std::allocator<char>> = {<__gnu_cxx::new_allocator<char>> = {<No data fields>}, <No data fields>}, 
+     _M_p = 0xe2dd588 "AvikPIDNew"}, _M_string_length = 10, {_M_local_buf = "AvikPIDNew\000\000\000\000\000", 
+     _M_allocated_capacity = 5639713243122988609}}, moduleLabel_ = {static npos = 18446744073709551615, 
+     _M_dataplus = {<std::allocator<char>> = {<__gnu_cxx::new_allocator<char>> = {<No data fields>}, <No data fields>}, 
+     _M_p = 0xe2ed540 "AvikPIDNewDeMHDar"}, _M_string_length = 17, {_M_local_buf = "\036", '\000' <repeats 14 times>, 
+     _M_allocated_capacity = 30}}, processConfiguration_ = {processName_ = {static npos = 18446744073709551615, 
+     _M_dataplus = {<std::allocator<char>> = {<__gnu_cxx::new_allocator<char>> = {<No data fields>}, <No data fields>}, 
+     _M_p = 0xe2f08f0 "ReadRecoStnmaker"}, _M_string_length = 16, {_M_local_buf = "\036", '\000' <repeats 14 times>, _M_allocated_capacity = 30}}, 
+      parameterSetID_ = {valid_ = true, id_ = {_M_elems = "ū(-.\266\214\326[\302\312\352 {x\343\303\067\305", <incomplete sequence \315>}}, 
+      releaseVersion_ = {static npos = 18446744073709551615, _M_dataplus = {<std::allocator<char>> = {<__gnu_cxx::new_allocator<char>> = {<No data fields>}, 
+     <No data fields>}, 
+     _M_p = 0xe2dd600 "v2_12_01"}, _M_string_length = 8, {_M_local_buf = "v2_12_01\000\000\000\000\000\000\000", 
+     _M_allocated_capacity = 3544437575921906294}}}, parentageEnabled_ = true, rangesEnabled_ = true, dbEnabled_ = true, id_ = 40}
+
+(gdb) p event.aux_
+$1 = (const art::EventAuxiliary &) @0x1103b9cc: {static branch_type = art::InEvent, 
+id_ = {subRun_ = {run_ = {run_ = 1002}, subRun_ = 186}, event_ = 5849}, 
+time_ = {timeLow_ = 0, timeHigh_ = 0}, isRealData_ = false, experimentType_ = art::EventAuxiliary::Any}
+
+
+      const TrkHit  *first(nullptr), *last(nullptr); 
+
+      // for (int ih=0; ih<nh; ++ih) {
+      //   const TrkHit* hit =  dynamic_cast<const TrkHit*> (hots->at(ih));
+      // 	if (hit   != nullptr) {
+      // 	  if (first == nullptr) first = hit;
+      // 	  last = hit;
+      // 	}
+      // }
+
+      first = dynamic_cast<const TrkHit*> (trk->firstHit()->kalHit()->hit());   <======= line in questions
+
+(gdb) p trk->_hitrange
+$3 = {258, -1}
+(gdb) p trk->_sites._M_impl._M_finish-trk->_sites._M_impl._M_start
+$6 = 257
+
+** <2019-06-21 Fri>  *debug*                                                               
+
+ gdb) p evt.aux_
+$2 = (const art::EventAuxiliary &) @0x19949a5c: {static branch_type = art::InEvent, 
+id_ = {subRun_ = {run_ = {run_ = 2701}, subRun_ = 50495}, event_ = 1087090}, 
+time_ = {timeLow_ = 0, timeHigh_ = 0}, isRealData_ = false, experimentType_ = art::EventAuxiliary::Any}
+
+
+      while ( !cal.geomUtil().isInsideSection(iSection,trjVec) )  <--- TrackCaloIntersection_module.cc:333
+        {
+          rangeOut = rangeIn;
+          rangeIn += _pathStep;
+          updateTrjVec(cal,traj,rangeIn,trjVec);
+          if (_diagLevel>2) std::cout<<"TrackExtrpol position scan In up "<<trjVec<<"  for currentRange="<<rangeIn<<"   "<<"radius="<<radiusAtRange(traj,rangeIn)<<std::endl;
+
+          if ( rangeIn > rangeEnd) return rangeIn;
+        }
+    }
+
+
+(gdb) p rangeIn
+$32 = -nan(0x8000000000000)
+(gdb) p traj
+$33 = (const TrkDifTraj &) @0x1d81fff0: {<Trajectory> = {_vptr.Trajectory = 0x7fbaf065f5d8 <vtable for TrkDifPieceTraj+16>, flightrange = {-3774.0017589344543, 7719.1105076498061}}, <No data fields>}
+
+** <2019-06-17 Mon>  *prestage dataset, submit grid job, gen_fcl*                          
+
+  mdc2018_stntuple/scripts/submit_grid_job mdc2018_stntuple 740_0001 CeEndpoint read_reco_stn .
+
+  mdc2018_stntuple/scripts/gen_fcl mdc2018_stntuple 740_0001 CeEndpoint read_reco_stn .
+
+  samweb prestage-dataset --parallel=5 --defname=dig.mu2e.CeEndpoint.MDC2018b.art
+  see output: http://samweb.fnal.gov:8480/sam/mu2e/api/running/projects
+
+** <2019-02-01 Fri>  *catalog stntuples*                                                   
 
   Stntuple/scripts/catalog_stntuples -v -d e21s721z  -o v7_2_1
   Stntuple/scripts/catalog_stntuples -v -d e41s721z  -o v7_2_1
 
-  <2019-01-31 Thu> *for CeEndpoint-mix and CeplusEndpoint-mix use 50 files/job segment*
+** <2019-01-31 Thu>  *for CeEndpoint-mix and CeplusEndpoint-mix use 50 files/job segment*  
 
   mdc2018_stntuple/scripts/gen_fcl mdc2018_stntuple 721_0002 CeEndpoint-mix read_reco_stn .
   mdc2018_stntuple/scripts/gen_fcl mdc2018_stntuple 721_0002 CeplusEndpoint-mix read_reco_stn .
 
-  <2019-01-27 Sun>  *to split a file with the filelist into several ones:* 
+** <2019-01-27 Sun>  *to split a file with the filelist into several ones*                 
 
   split -d -l 4000 -a 4 dig.mu2e.flateminus-mix.MDC2018d.art.files dig.mu2e.flateminus-mix.MDC2018d.art.
   
-  <2019-01-01 Tue>
+** <2019-01-01 Tue>  *submit_mu2e_job, gen_fcl*                                            
 
   mdc2018_stntuple/scripts/gen_fcl mdc2018_stntuple 721_0001 flateplus read_reco_stn 10 .
 
@@ -44,14 +136,13 @@
   setup mu2egrid v6_00_00
   gridexport -E $PWD/grid_export -X mdc2018_stntuple/AAA_GRIDEXPORT_EXCLUDE.txt
 
-  <2018-12-30 Sun>
+** <2018-12-30 Sun>  *dccp*                                                                
 
   dccp -P -t 3600 dcap://fndca1.fnal.gov:24125//pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dig/mu2e/flatpigamma/MDC2018b/art/b9/78/dig.mu2e.flatpigamma.MDC2018b.001002_00000039.art
   dccp -P -t 3600 dcap://fndca1.fnal.gov:24125//pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dig/mu2e/flatpigamma/MDC2018b/art/65/bc/dig.mu2e.flatpigamma.MDC2018b.001002_00000283.art
   dccp -P -t 3600 dcap://fndca1.fnal.gov:24125//pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dig/mu2e/flatpigamma/MDC2018b/art/d0/be/dig.mu2e.flatpigamma.MDC2018b.001002_00000340.art
   
-
-  <2018-12-28 Fri>
+** <2018-12-28 Fri>  *dc_check*                                                            
   cd /pnfs/mu2e/tape/phy-sim/dig/mu2e/flatmugamma-mix/MDC2018d/art/ca/d4
   cat ".(use)(4)(dig.mu2e.flatmugamma-mix.MDC2018d.001002_00000115.art)"
   
@@ -60,8 +151,7 @@
   dccp -P -t -1 dcap://fndca1.fnal.gov:24125//pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dig/mu2e/flatmugamma-mix/MDC2018d/art/51/6e/dig.mu2e.flatmugamma-mix.MDC2018d.001002_00000137.art; 
   x=$?; echo $x
   
-  
-  <2018-12-27 Thu>
+** <2018-12-27 Thu>  *sam_prestage_dataset*                                                
   
   *submitted prestaging* : samweb prestage-dataset --parallel=5 --defname=dig.mu2e.flatmugamma-mix.MDC2018d.art &
   
@@ -71,26 +161,23 @@
   
   *dcap*: 
 
-  <2018-12-26 Wed>
+** <2018-12-26 Wed>  *gen_fcl*                                                             
   
   mdc2018_stntuple/scripts/gen_fcl mdc2018_stntuple 721_0001 flatmugamma-mix read_reco_stn 10 .
   
-  <2018-12-25 Tue>
+** <2018-12-25 Tue>  *gen fcl*                                                             
   
   *fixed externalRMC --> ExternalRMC*
 
   mdc2018_stntuple/scripts/gen_fcl mdc2018_stntuple 721_0001 dig.mu2e.flatmugamma-mix.MDC2018d.art:000050 read_reco_stn 5 .
 
-
-  <2018-12-24 Mon>
+** <2018-12-24 Mon>  *gen_fcl, submit_grid_job*                                            
 
   mdc2018_stntuple/scripts/gen_fcl         mdc2018_stntuple dig.mu2e.flatmugamma.MDC2018a.art read_reco_stn 10 .
 
   mdc2018_stntuple/scripts/submit_grid_job mdc2018_stntuple flatmugamma            721_0001 read_reco_stn .
   mdc2018_stntuple/scripts/submit_grid_job mdc2018_stntuple flatmugamma-mix:000010 721_0001 read_reco_stn .
-
-
-  <2018-12-23 Sun>:
+** <2018-12-23 Sun>  *gridexport, gen_fcl*                                                 
   
   . mdc2018_stntuple/scripts/gen_fcl dig.mu2e.flateplus.MDC2018a.art
   cd mdc2018_stntuple/tmp_fcl/dig.mu2e.flateplus.MDC2018a.art.read_reco_stn/
@@ -100,8 +187,8 @@
   
   gridexport -E $PWD/grid_export -A mdc2018_stntuple/AAA_GRIDEXPORT_EXCLUDE.txt
 
-
-  <2018-12-22 Sat>
+** <2018-12-22 Sat>  *generate_fcl*                                                        
 
   generate_fcl --description=read_reco_stn --dsconf flateplus --merge=10 --embed mdc2018_stnntuple/fcl/read_reco_stnmaker.fcl  --inputs=/mu2e/app/users/murat/mdc2018/catalogs/MDC2018/dig.mu2e.flateplus.MDC2018a.art/dig.mu2e.flateplus.MDC2018a.art.files
   generate_fcl --description=read_reco_stn --dsconf flateplus --merge=10 --embed mdc2018_stntuple/fcl/read_reco_stnmaker_grid.fcl  --inputs=/mu2e/app/users/murat/mdc2018/catalogs/MDC2018/dig.mu2e.flateplus.MDC2018a.art/dig.mu2e.flateplus.MDC2018a.art.files
+

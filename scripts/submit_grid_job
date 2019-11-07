@@ -16,7 +16,7 @@ prefix='echo ' ; if [ ".$doit" != "." ] ; then prefix='' ; fi
 
 setup mu2etools
 setup mu2efiletools
-setup mu2egrid       v6_01_00
+setup mu2egrid       # v6_01_00  # a more recent version (v6_02_00) is already the default
 
 dsconf=${version}_${dsid}
 

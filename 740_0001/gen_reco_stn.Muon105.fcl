@@ -1,0 +1,38 @@
+# -*- mode:tcl -*-
+#------------------------------------------------------------------------------
+# generate 105 MeV/c muons and make STNTUPLE
+# p1 : default reconstruction path
+# p2 : read and ntuple (use with RootInput to ntuple MDC'2018 files)
+# p3 : path to debug the TPR and CPR reconstruction paths separately
+#
+# GEN_ID is the procesID, not particleID
+#------------------------------------------------------------------------------
+BEGIN_PROLOG
+  bgHitFiles                  : @nil
+  INPUT_MODULE                : EmptyEvent
+  TRIGGER_PATH                : p1
+  PROCESS_NAME                : GenRecoStn
+  GEN_ID       @protect_ignore: StoppedParticleReactionGun
+END_PROLOG
+
+#include "Stntuple/test/stnmaker.fcl"
+#------------------------------------------------------------------------------
+# uncomment the next 2 lines if you want the DST (.art) file to be written out
+#-----------------------------------------------------------------------------
+# physics.out                               : [ detectorOutput ]
+# outputs.detectorOutput.SelectEvents       : [ @local::TRIGGER_PATH ]
+#------------------------------------------------------------------------------
+# output file names 
+#------------------------------------------------------------------------------
+services.TFileService.fileName            : "nts._USER_.gen_reco_stn.Muon105.000001.root"
+physics.filters.InitStntuple.histFileName : "nts._USER_.gen_reco_stn.Muon105.000001.stn"
+outputs.detectorOutput.fileName           : "sim._USER_.gen_reco_stn.Muon105.000001.art"
+#------------------------------------------------------------------------------
+# uncomment to avoid waisting time on the initialization of detailed neutron 
+# cross sections - that shouldn't affect the electron simulation 
+#------------------------------------------------------------------------------
+physics.producers.generate                      : { @table::Stntuple.producers.mgun }
+physics.producers.g4run.physics.physicsListName : "QGSP_BERT"
+#------------------------------------------------------------------------------
+# everything below is appended by murat/scripts/submit_mu2e_job
+#------------------------------------------------------------------------------
